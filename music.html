@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0b12">
+  <title>Music | Hin's Website</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+    :root {
+      color-scheme: dark;
+      --night: #0b0b12;
+      --paper: #f3f1f7;
+      --muted: #a8a8b8;
+      --pink: #f472b6;
+      --cyan: #67e8f9;
+      --violet: #c4b5fd;
+      --line: rgba(226, 232, 240, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+    }
+
+    html {
+      min-height: 100%;
+      background: var(--night);
+    }
+
+    body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      color: var(--paper);
+      font-family: 'DM Sans', sans-serif;
+      line-height: 1.6;
+      background:
+        radial-gradient(ellipse at 15% 5%, rgba(244, 114, 182, 0.13), transparent 34rem),
+        radial-gradient(ellipse at 88% 30%, rgba(56, 189, 248, 0.12), transparent 32rem),
+        var(--night);
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      min-height: 76px;
+      padding: 0 5vw;
+      border-bottom: 1px solid var(--line);
+      background: rgba(11, 11, 18, 0.88);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      width: fit-content;
+      color: var(--cyan);
+      font-size: 1.25rem;
+      font-weight: 700;
+      text-decoration: none;
+      text-shadow: 0 0 12px rgba(103, 232, 249, 0.45);
+    }
+
+    .site-name {
+      color: #fff;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 700;
+      white-space: nowrap;
+      text-decoration: none;
+      text-shadow: 0 0 12px rgba(244, 114, 182, 0.32);
+    }
+
+    .topbar nav {
+      justify-self: end;
+    }
+
+    .topbar nav a {
+      color: var(--muted);
+      font-size: 16px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: color 180ms ease;
+    }
+
+    .topbar nav a:hover,
+    .topbar nav a:focus-visible {
+      color: var(--cyan);
+    }
+
+    main {
+      width: min(880px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 76px 0 96px;
+    }
+
+    .intro {
+      margin-bottom: 42px;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      line-height: 1.08;
+      background: linear-gradient(100deg, #67e8f9, #f472b6 55%, #c4b5fd);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 12px rgba(244, 114, 182, 0.36));
+    }
+
+    .music-description {
+      color: var(--muted);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1.6;
+      text-shadow: none;
+    }
+
+    .recommendation-section {
+      padding: 22px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .recommendation-section h2 {
+      color: var(--violet);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      text-shadow: 0 0 14px rgba(196, 181, 253, 0.22);
+    }
+
+    .album-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .album-cover-link {
+      display: block;
+      max-width: 190px;
+      overflow: hidden;
+      aspect-ratio: 1;
+      border: 1px solid rgba(196, 181, 253, 0.3);
+      border-radius: 8px;
+      box-shadow: 0 0 24px rgba(103, 232, 249, 0.12);
+    }
+
+    .album-cover-link img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 180ms ease;
+    }
+
+    .album-cover-link:hover img,
+    .album-cover-link:focus-visible img {
+      transform: scale(1.04);
+    }
+
+    .album-title {
+      margin-top: 12px;
+      color: var(--paper);
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+
+    .album-artist {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .song-list {
+      margin-top: 16px;
+      padding: 0;
+      border-top: 1px solid var(--line);
+      list-style: none;
+    }
+
+    .song-row {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr) minmax(300px, 45%);
+      align-items: center;
+      gap: 18px;
+      padding: 15px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .song-number {
+      color: var(--pink);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .song-info {
+      min-width: 0;
+    }
+
+    .song-info h3 {
+      overflow-wrap: anywhere;
+      color: var(--paper);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .song-info p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .song-row audio {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      height: 44px;
+      accent-color: var(--pink);
+      border: 1px solid rgba(103, 232, 249, 0.42);
+      border-radius: 4px;
+      overflow: hidden;
+      background: linear-gradient(105deg, #164e63, #6d28d9 52%, #be185d);
+    }
+
+    .song-row audio::-webkit-media-controls-panel {
+      background: linear-gradient(105deg, #164e63, #6d28d9 52%, #be185d);
+    }
+
+    .song-row audio::-webkit-media-controls-current-time-display,
+    .song-row audio::-webkit-media-controls-time-remaining-display {
+      color: #fff;
+    }
+
+    @media (max-width: 640px) {
+      .topbar {
+        grid-template-columns: 1fr auto;
+        min-height: 68px;
+        padding: 0 20px;
+      }
+
+      .site-name {
+        display: none;
+      }
+
+      main {
+        padding-top: 56px;
+      }
+
+      .album-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .song-row {
+        grid-template-columns: 28px minmax(0, 1fr);
+        gap: 12px;
+      }
+
+      .song-row audio {
+        grid-column: 2;
+      }
+
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="MainPage.html#home">Hin.</a>
+    <a class="site-name" href="MainPage.html#home">Hin's Website</a>
+    <nav aria-label="Main navigation">
+      <a href="MainPage.html">Home</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <h1 id="page-title">Hin's Music Room</h1>
+      <p class="music-description">As someone who deeply loves music, Hin has a few albums and music recommendations for you.</p>
+    </section>
+
+    <section class="recommendation-section" aria-labelledby="albums-title">
+      <h2 id="albums-title">Recommended Albums</h2>
+      <div class="album-grid">
+        <article>
+          <a class="album-cover-link" href="https://open.spotify.com/artist/4Kxlr1PRlDKEB0ekOCyHgX" target="_blank" rel="noopener noreferrer" aria-label="Open BIGBANG on Spotify">
+            <img src="BIGBANG_-_MADE.jpg" alt="BIGBANG album cover MADE">
+          </a>
+          <h3 class="album-title">MADE</h3>
+          <p class="album-artist">BIGBANG</p>
+        </article>
+        <article>
+          <a class="album-cover-link" href="https://open.spotify.com/album/2koSNfchdUxqw1rPJO87aH" target="_blank" rel="noopener noreferrer" aria-label="Open Kwon Ji Yong on Spotify">
+            <img src="GD-USB.jpg" alt="Kwon Ji Yong album cover">
+          </a>
+          <h3 class="album-title">Kwon Ji Yong</h3>
+          <p class="album-artist">G-Dragon</p>
+        </article>
+        <article>
+          <a class="album-cover-link" href="https://open.spotify.com/album/4FviRd7FubuuGNVt2qME1G" target="_blank" rel="noopener noreferrer" aria-label="Open Übermensch on Spotify">
+            <img src="Ubermensch2.jpg" alt="Übermensch album cover">
+          </a>
+          <h3 class="album-title">Übermensch</h3>
+          <p class="album-artist">G-Dragon</p>
+        </article>
+        <article>
+          <a class="album-cover-link" href="https://open.spotify.com/album/3gHhPm8z8tid1kvpniUKuK" target="_blank" rel="noopener noreferrer" aria-label="Open Armageddon on Spotify">
+            <img src="Armageddon.jpg" alt="Armageddon album cover">
+          </a>
+          <h3 class="album-title">Armageddon</h3>
+          <p class="album-artist">aespa</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="recommendation-section" aria-labelledby="songs-title">
+      <h2 id="songs-title">Recommended Songs</h2>
+      <ol class="song-list">
+        <li class="song-row">
+          <span class="song-number" aria-hidden="true">01</span>
+          <div class="song-info"><h3>BiiiG</h3><p>BIGBANG</p></div>
+          <audio controls preload="none" src="Song/1.mp3" aria-label="Play BiiG by BIGBANG"></audio>
+        </li>
+        <li class="song-row">
+          <span class="song-number" aria-hidden="true">02</span>
+          <div class="song-info"><h3>Without You</h3><p>G-Dragon</p></div>
+          <audio controls preload="none" src="Song/2.mp3" aria-label="Play Without You by G-Dragon"></audio>
+        </li>
+        <li class="song-row">
+          <span class="song-number" aria-hidden="true">03</span>
+          <div class="song-info"><h3>Sober</h3><p>BIGBANG</p></div>
+          <audio controls preload="none" src="Song/3.mp3" aria-label="Play Sober by BIGBANG"></audio>
+        </li>
+        <li class="song-row">
+          <span class="song-number" aria-hidden="true">04</span>
+          <div class="song-info"><h3>Dirty</h3><p>Hung Ka Ho</p></div>
+          <audio controls preload="none" src="Song/4.mp3" aria-label="Play Dirty by Hung Ka Ho"></audio>
+        </li>
+        <li class="song-row">
+          <span class="song-number" aria-hidden="true">05</span>
+          <div class="song-info"><h3>Die with a Smile</h3><p>Lady Gaga &amp; Bruno Mars</p></div>
+          <audio controls preload="none" src="Song/5.mp3" aria-label="Play Die with a Smile by Lady Gaga and Bruno Mars"></audio>
+        </li>
+        <li class="song-row">
+          <span class="song-number" aria-hidden="true">06</span>
+          <div class="song-info"><h3>Good Boy</h3><p>G-Dragon x Taeyang</p></div>
+          <audio controls preload="none" src="Song/6.mp3" aria-label="Play Good Boy by G-Dragon and Taeyang"></audio>
+        </li>
+        <li class="song-row">
+          <span class="song-number" aria-hidden="true">07</span>
+          <div class="song-info"><h3>Spark</h3><p>Taeyeon</p></div>
+          <audio controls preload="none" src="Song/7.mp3" aria-label="Play Spark by Taeyeon"></audio>
+        </li>
+        <li class="song-row">
+          <span class="song-number" aria-hidden="true">08</span>
+          <div class="song-info"><h3>Love You Like Crazy</h3><p>Taeyeon</p></div>
+          <audio controls preload="none" src="Song/8.mp3" aria-label="Play Love You Like Crazy by Taeyeon"></audio>
+        </li>
+        <li class="song-row">
+          <span class="song-number" aria-hidden="true">09</span>
+          <div class="song-info"><h3>Drip</h3><p>BabyMonster</p></div>
+          <audio controls preload="none" src="Song/9.mp3" aria-label="Play Drip by BabyMonster"></audio>
+        </li>
+        <li class="song-row">
+          <span class="song-number" aria-hidden="true">10</span>
+          <div class="song-info"><h3>Trick or Trick</h3><p>aespa</p></div>
+          <audio controls preload="none" src="Song/10.mp3" aria-label="Play Trick or Trick by aespa"></audio>
+        </li>
+      </ol>
+    </section>
+  </main>
+  <script>
+    document.querySelectorAll('.song-row audio').forEach((player) => {
+      player.volume = 0.25;
+    });
+  </script>
+</body>
+</html>

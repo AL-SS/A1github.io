@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lam Siu Hin | Personal Website</title>
+  <script>
+    try {
+      if (sessionStorage.getItem('hin-intro-played') === 'true') {
+        document.documentElement.classList.add('intro-already-played');
+      } else {
+        sessionStorage.setItem('hin-intro-played', 'true');
+      }
+    } catch {}
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+  
+    :root {
+      --bg: #0b0b12;
+      --card: #16161f;
+      --text: #f0f0f5;
+      --muted: #a8a8b8;
+      --accent: #a78bfa;
+      --accent2: #f472b6;
+      --accent3: #38bdf8;
+      --accent4: #fbbf24;
+      --border: #2a2a3a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+      position: relative;
+      background-image: 
+        radial-gradient(ellipse 80% 50% at 20% -10%, rgba(167, 139, 250, 0.18), transparent),
+        radial-gradient(ellipse 60% 40% at 90% 10%, rgba(244, 114, 182, 0.12), transparent),
+        radial-gradient(ellipse 50% 30% at 50% 100%, rgba(56, 189, 248, 0.08), transparent);
+      background-attachment: fixed;
+      text-shadow: 0 0 3px rgba(56, 189, 248, 0.45),
+                   0 0 7px rgba(244, 114, 182, 0.28),
+                   0 0 12px rgba(167, 139, 250, 0.2);
+    }
+
+    .snow-layer {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+      opacity: 0.9;
+    }
+
+    .snow-layer span {
+      position: absolute;
+      top: -10%;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.85);
+      box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+      animation: snowfall linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes snowfall {
+      0% {
+        transform: translate3d(0, -10%, 0) scale(0.7);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translate3d(var(--drift, 12px), 110vh, 0) scale(1.1);
+        opacity: 0;
+      }
+    }
+
+    .page-shell {
+      position: relative;
+      z-index: 1;
+    }
+
+    .site-intro {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+      perspective: 1200px;
+      background: #080811;
+      animation: intro-dismiss 700ms ease 4.3s forwards;
+    }
+
+    .intro-already-played .site-intro {
+      display: none;
+    }
+
+    .intro-light {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 38% 78% at center, rgba(248, 250, 252, 0.08), rgba(148, 163, 184, 0.04) 48%, transparent 78%);
+      opacity: 0.2;
+      animation: doorway-light 2.1s ease 1s forwards;
+    }
+
+    .intro-welcome {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      padding: 24px;
+      text-align: center;
+      opacity: 0;
+      transform: translateY(14px);
+      animation: welcome-arrive 700ms ease 2.7s forwards;
+    }
+
+    .intro-welcome p {
+      color: #e2e8f0;
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.75);
+    }
+
+    .intro-welcome h2 {
+      margin-top: 8px;
+      color: #fff;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 4rem);
+      line-height: 1.15;
+      text-shadow: 0 3px 20px rgba(0, 0, 0, 0.8);
+    }
+
+    .intro-welcome span {
+      margin-top: 8px;
+      color: #e5e7eb;
+      font-size: 1rem;
+    }
+
+    .intro-door {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 50.5%;
+      border: 1px solid rgba(203, 213, 225, 0.38);
+      background: linear-gradient(145deg, #252a34, #171a22 54%, #20242d);
+      box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.48), 0 8px 28px rgba(0, 0, 0, 0.3);
+      backface-visibility: hidden;
+      animation-duration: 2.8s;
+      animation-delay: 0.25s;
+      animation-timing-function: cubic-bezier(0.72, 0, 0.2, 1);
+      animation-fill-mode: forwards;
+    }
+
+    .intro-door::before {
+      content: '';
+      position: absolute;
+      inset: 8%;
+      border: 1px solid rgba(203, 213, 225, 0.24);
+      border-radius: 4px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 30%, rgba(0, 0, 0, 0.16));
+      box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.24);
+    }
+
+    .intro-door--left {
+      left: 0;
+      border-right-color: rgba(203, 213, 225, 0.65);
+      transform-origin: left center;
+      animation-name: door-open-left;
+    }
+
+    .intro-door--right {
+      right: 0;
+      border-left-color: rgba(203, 213, 225, 0.65);
+      transform-origin: right center;
+      animation-name: door-open-right;
+    }
+
+    .intro-handle {
+      position: absolute;
+      top: 50%;
+      z-index: 1;
+      width: 10px;
+      height: 84px;
+      border: 1px solid rgba(255, 255, 255, 0.78);
+      border-radius: 6px;
+      background: linear-gradient(#f8fafc, #9ca3af 55%, #64748b);
+      box-shadow: 0 2px 10px rgba(15, 23, 42, 0.3);
+      transform: translateY(-50%);
+    }
+
+    .intro-door--left .intro-handle {
+      right: 7%;
+    }
+
+    .intro-door--right .intro-handle {
+      left: 7%;
+    }
+
+    @keyframes door-open-left {
+      to { transform: rotateY(96deg); }
+    }
+
+    @keyframes door-open-right {
+      to { transform: rotateY(-96deg); }
+    }
+
+    @keyframes doorway-light {
+      to { opacity: 1; }
+    }
+
+    @keyframes welcome-arrive {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes intro-dismiss {
+      to { opacity: 0; visibility: hidden; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .site-intro {
+        display: none;
+      }
+    }
+
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(11, 11, 18, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(167, 139, 250, 0.15);
+      z-index: 100;
+      padding: 1rem 2rem;
+    }
+
+    .nav-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+    }
+
+    .site-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #f8fafc;
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      white-space: nowrap;
+    }
+
+    .logo {
+      display: inline-block;
+      font-weight: 700;
+      font-size: 1.3rem;
+      letter-spacing: -0.5px;
+      text-decoration: none;
+      background: linear-gradient(90deg, #a78bfa, #f472b6, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: gradient-shift 4s ease infinite;
+    }
+
+    @keyframes gradient-shift {
+      0% { background-position: 0% center; }
+      50% { background-position: 100% center; }
+      100% { background-position: 0% center; }
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.95rem;
+      font-weight: 700;
+      transition: all 0.25s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: #fff;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: auto;
+      display: flex;
+      align-items: center;
+      padding: 7rem 2rem 2.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero-content {
+      max-width: 900px;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      background: linear-gradient(135deg, rgba(167, 139, 250, 0.25), rgba(244, 114, 182, 0.2));
+      color: #e9d5ff;
+      padding: 0.4rem 1rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      border: 1px solid rgba(167, 139, 250, 0.3);
+      box-shadow: 0 0 20px rgba(167, 139, 250, 0.15);
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 6vw, 4.2rem);
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+      letter-spacing: -1px;
+      background: linear-gradient(135deg, #f9a8d4, #c4b5fd, #67e8f9, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 220% auto;
+      animation: gradient-shift 6s ease infinite;
+    }
+
+    h1 span {
+      background: linear-gradient(135deg, #a78bfa, #f472b6, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 200% auto;
+      animation: gradient-shift 5s ease infinite;
+    }
+
+    .hero-sub {
+      font-size: 1.2rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      max-width: 780px;
+    }
+
+    /* Photo */
+    .photo-section {
+      padding: 1.5rem 2rem 0;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .profile-photo {
+      width: 100%;
+      max-width: 720px;
+      border-radius: 20px;
+      border: 2px solid transparent;
+      background: linear-gradient(var(--bg), var(--bg)) padding-box,
+                  linear-gradient(135deg, #a78bfa, #f472b6, #38bdf8) border-box;
+      display: block;
+      margin: 0 auto;
+      box-shadow: 0 15px 40px rgba(167, 139, 250, 0.2);
+      transition: transform 0.4s, box-shadow 0.4s;
+    }
+
+    .profile-photo:hover {
+      transform: scale(1.02);
+      box-shadow: 0 20px 50px rgba(244, 114, 182, 0.25);
+    }
+
+    /* Sections */
+    section {
+      padding: 3rem 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      margin-bottom: 0.4rem;
+      background: linear-gradient(90deg, #f9a8d4, #c4b5fd, #67e8f9, #fbbf24);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-size: 220% auto;
+      animation: gradient-shift 6s ease infinite;
+    }
+
+    .section-sub {
+      color: var(--muted);
+      margin-bottom: 1.8rem;
+      font-size: 1.05rem;
+    }
+
+    .section-header-row {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.4rem;
+    }
+
+    .section-header-row img {
+      width: 110px;
+      height: 110px;
+      object-fit: cover;
+      border-radius: 16px;
+      border: 1px solid rgba(167, 139, 250, 0.25);
+      box-shadow: 0 12px 26px rgba(167, 139, 250, 0.15);
+    }
+
+    .motto-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 0.4rem;
+    }
+
+    .motto-header img {
+      width: 82px;
+      height: 82px;
+      object-fit: cover;
+      border-radius: 14px;
+      border: 1px solid rgba(167, 139, 250, 0.25);
+      box-shadow: 0 10px 22px rgba(167, 139, 250, 0.15);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .motto-header img:hover,
+    .motto-header img:focus-visible {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 14px 28px rgba(244, 114, 182, 0.2);
+    }
+
+    .motto-message {
+      margin-top: 0.8rem;
+      min-height: 1.5rem;
+      color: #f9a8d4;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    /* Cards */
+    .card {
+      background: linear-gradient(145deg, rgba(22, 22, 31, 0.9), rgba(28, 28, 40, 0.88));
+      border: 1px solid rgba(167, 139, 250, 0.2);
+      border-radius: 18px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      transition: all 0.35s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, #a78bfa, #f472b6, #38bdf8);
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+
+    .card:hover {
+      border-color: rgba(167, 139, 250, 0.45);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 30px rgba(167, 139, 250, 0.15);
+    }
+
+    .card:hover::before {
+      opacity: 1;
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      margin-bottom: 0.6rem;
+      color: #c4b5fd;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .about-card {
+      background: linear-gradient(145deg, rgba(20, 22, 35, 0.8), rgba(22, 22, 31, 0.75)),
+                  url('hsu.jpg') center/cover no-repeat;
+    }
+
+    .about-card p {
+      color: #f4f4f8;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    .about-card a {
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .about-card a:hover {
+      color: #e9d5ff;
+    }
+
+    #studies .card {
+      background: linear-gradient(145deg, rgba(8, 10, 18, 0.86), rgba(12, 14, 24, 0.82)),
+                  url('DSBI2.png') center/contain no-repeat;
+      min-height: 280px;
+      border: none;
+    }
+
+    #studies .card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Work card with logo */
+    .work-card {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      background: linear-gradient(145deg, rgba(8, 10, 18, 0.86), rgba(12, 14, 24, 0.82)),
+                  url('MTR TRAIN.jpg') center/cover no-repeat;
+      border: 1px solid rgba(244, 114, 182, 0.25);
+    }
+
+    .work-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .work-content {
+      flex: 1;
+    }
+
+    .work-logo {
+      width: 110px;
+      height: auto;
+      flex-shrink: 0;
+      border-radius: 50%;
+      box-shadow: 0 0 25px rgba(220, 38, 38, 0.35);
+      transition: transform 0.3s;
+    }
+
+    .work-logo:hover {
+      transform: scale(1.08) rotate(5deg);
+    }
+
+    @media (max-width: 600px) {
+      .work-card {
+        flex-direction: column;
+        text-align: center;
+      }
+      .work-logo {
+        margin-top: 1rem;
+      }
+    }
+
+    /* Interests special card */
+    .interest-card {
+      background: linear-gradient(145deg, rgba(26, 21, 37, 0.9), rgba(34, 26, 40, 0.8)),
+                  url('ubermensch.png') center/cover no-repeat;
+      border: 1px solid rgba(244, 114, 182, 0.35);
+      box-shadow: 0 8px 25px rgba(244, 114, 182, 0.1);
+    }
+
+    #motto .interest-card {
+      background: linear-gradient(145deg, rgba(26, 21, 37, 0.72), rgba(34, 26, 40, 0.68));
+      min-height: 360px;
+    }
+
+    .motto-video {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.55;
+      pointer-events: none;
+    }
+
+    #motto .interest-card > :not(.motto-video) {
+      position: relative;
+      z-index: 1;
+    }
+
+    .interest-card h3 {
+      color: #f9a8d4;
+      background: linear-gradient(90deg, #f472b6, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .interest-card p a {
+      color: #fff;
+      font-weight: 600;
+      font-size: 1.2em;
+    }
+
+    .interest-card p a:hover {
+      color: #e9d5ff;
+    }
+
+    .bigbang-link,
+    .bigbang-link strong {
+      color: #fbbf24 !important;
+      text-decoration: none;
+    }
+
+    .bigbang-link:hover,
+    .bigbang-link:hover strong {
+      color: #fde68a !important;
+      text-decoration: none;
+    }
+
+    .gif-wrap {
+      margin-top: 1.5rem;
+      padding: 0.8rem;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(167, 139, 250, 0.18);
+      box-shadow: 0 8px 30px rgba(167, 139, 250, 0.08);
+    }
+
+    .gif-wrap img {
+      display: block;
+      width: 100%;
+      max-height: 280px;
+      object-fit: cover;
+      border-radius: 14px;
+    }
+
+    .game-gallery {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 1.25rem;
+    }
+
+    .game-gallery img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      border: 1px solid rgba(196, 181, 253, 0.3);
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(103, 232, 249, 0.1);
+    }
+
+    .watch-invite {
+      max-width: 1100px;
+      margin: 0 auto 2.5rem;
+      padding: 1.5rem 2rem;
+      border-top: 1px solid rgba(167, 139, 250, 0.2);
+      text-align: center;
+    }
+
+    .watch-invite p {
+      color: var(--text);
+      font-size: 1.15rem;
+    }
+
+    .watch-invite a {
+      display: inline-block;
+      margin-top: 0.6rem;
+      color: #fbbf24;
+      font-size: 1.1rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .watch-invite a:hover,
+    .watch-invite a:focus-visible {
+      color: #fde68a;
+      text-decoration: underline;
+    }
+
+    @media (max-width: 600px) {
+      .game-gallery {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid rgba(167, 139, 250, 0.15);
+      color: var(--muted);
+      font-size: 0.9rem;
+      background: linear-gradient(to top, rgba(167, 139, 250, 0.05), transparent);
+    }
+
+    .contact-me {
+      margin-top: 0.8rem;
+      font-size: 1rem;
+      color: #f3e8ff;
+    }
+
+    .contact-me a {
+      color: #c4b5fd;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .contact-me a:hover {
+      text-decoration: underline;
+    }
+
+    @media (max-width: 700px) {
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="site-intro" role="status">
+    <div class="intro-light" aria-hidden="true"></div>
+    <div class="intro-welcome">
+      <p>Welcome</p>
+      <h2>Hin's Website</h2>
+      <span>Come on in</span>
+    </div>
+    <div class="intro-door intro-door--left" aria-hidden="true"><span class="intro-handle"></span></div>
+    <div class="intro-door intro-door--right" aria-hidden="true"><span class="intro-handle"></span></div>
+  </div>
+
+  <div class="snow-layer" id="snow-layer" aria-hidden="true"></div>
+
+  <div class="page-shell">
+
+  <!-- Navigation -->
+  <nav>
+    <div class="nav-inner">
+      <a class="logo" href="#home">Hin.</a>
+      <a class="site-title" href="#home">Hin's Website</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#studies">Studies</a></li>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#interests">Interests</a></li>
+        <li><a href="music.html">Music</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>Hi ! I'm <span>Lam Siu Hin.</span></h1>
+      <p class="hero-sub">
+        Everyone calls me Hin. A local student at The Hang Seng University of Hong Kong who balances full-time studies with weekend work at MTR and a deep love for K-pop.
+      </p>
+    </div>
+  </section>
+
+  <!-- Photo -->
+  <section class="photo-section">
+    <img src="DSC_1305.jpg" alt="Hin playing table tennis" class="profile-photo">
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <h2 class="section-title">About Me</h2>
+    <p class="section-sub">A quick introduction</p>
+    
+    <div class="card about-card">
+      <p>
+        My name is Lam Siu Hin. Everyone calls me Hin. I was born in 2003 in Hong Kong and I am a local student at The Hang Seng University of Hong Kong (<a href="https://www.hsu.edu.hk/hk/" target="_blank" rel="noopener noreferrer">HSUHK</a>).
+      </p>
+      <p style="margin-top: 1rem;">
+        <strong>Date of birth:</strong> 31 December
+      </p>
+      <p style="margin-top: 1rem;">
+        Although studying and working take up most of my time, I still keep some personal space for the things that truly energise me — especially music.
+      </p>
+    </div>
+  </section>
+
+  <!-- Motto -->
+  <section id="motto">
+    <div class="motto-header">
+      <h2 class="section-title">My Motto</h2>
+      <img src="Ubermensch3.jpg" alt="Übermensch icon 1" data-text="Home Sweet Home" data-audio="HSH.mp3" tabindex="0">
+      <img src="Ubermensch2.jpg" alt="Übermensch icon 2" data-text="TooBad" data-audio="TooBad.mp3" tabindex="0">
+    </div>
+    <p class="section-sub">A personal philosophy</p>
+    <div class="motto-message" id="motto-message">Hover or tap a logo</div>
+
+    <div class="card interest-card">
+      <video class="motto-video" autoplay muted loop playsinline aria-hidden="true">
+        <source src="Ubermensch4.mp4" type="video/mp4">
+      </video>
+      <h3>Übermensch</h3>
+      <p>
+        My motto comes from G-Dragon's album <a href="https://ubermensch.us/pages/lyrics-credits" target="_blank" rel="noopener noreferrer"><strong>Übermensch</strong></a>, which means “superman.” However, this “superman” does not refer to a flying hero from comics. Instead, it represents someone who can break free from conventional ways of thinking, escape blind obedience, create their own values, and live true to their own will.
+      </p>
+    </div>
+  </section>
+
+  <!-- Studies -->
+  <section id="studies">
+    <div class="section-header-row">
+      <h2 class="section-title">Studies</h2>
+      <a href="https://msi.hsu.edu.hk/en/dsbi/programme-information/" target="_blank" rel="noopener noreferrer">
+        <img src="DSBI.jpg" alt="DSBI logo">
+      </a>
+    </div>
+    <p class="section-sub">What I’m learning at HSUHK</p>
+
+    <div class="card">
+      <h3>Data Science and Business Intelligence</h3>
+      <p>
+        I am currently a Year 3 student majoring in Data Science and Business Intelligence at The Hang Seng University of Hong Kong. I have been studying at HSUHK for three years.
+      </p>
+      <p style="margin-top: 1rem;">
+        Through my courses I have built a strong foundation in mathematics and Business, Accounting and Financial Studies (BAFS). These subjects help me understand both the technical and business sides of data.
+      </p>
+    </div>
+  </section>
+
+  <!-- Work -->
+  <section id="work">
+    <h2 class="section-title">Work Experience</h2>
+    <p class="section-sub">Part-time job on weekends</p>
+
+    <div class="card work-card">
+      <div class="work-content">
+        <h3>Customer Service Centre Assistant · MTR Corporation</h3>
+        <p>
+          Even as a full-time student, I work part-time on weekends at the Mass Transit Railway (MTR) Corporation.
+        </p>
+        <p style="margin-top: 1rem;">
+          My main responsibilities include:
+        </p>
+        <ul style="margin: 1rem 0 0 1.5rem; color: var(--muted);">
+          <li>Solving train operation issues</li>
+          <li>Handling various Octopus card problems</li>
+          <li>Assisting passengers who cannot enter or exit the gates</li>
+        </ul>
+      </div>
+      <a href="https://www.mtr.com.hk/en/customer/main/index.html" target="_blank" rel="noopener noreferrer">
+        <img src="mtr-logo.png" alt="MTR Logo" class="work-logo">
+      </a>
+    </div>
+  </section>
+
+  <!-- Interests -->
+  <section id="interests">
+    <h2 class="section-title">Personal Interests</h2>
+    <p class="section-sub">What I love outside of school and work</p>
+
+    <div class="card interest-card">
+      <h3>K-pop</h3>
+      <p>
+          I am a huge K-pop fan. I enjoy many groups, but <a class="bigbang-link" href="https://bigbang.bstage.in/" target="_blank" rel="noopener noreferrer"><strong>BIGBANG</strong></a> is my absolute favourite.
+      </p>
+      <p style="margin-top: 1rem;">
+        Their music, which started in the 2008, has never been surpassed or successfully imitated by any other group. The unique combination of hip-hop and electronic elements creates a feeling that is almost impossible to describe in words — you can only truly experience it yourself.
+      </p>
+
+      <div class="gif-wrap">
+        <a href="https://www.youtube.com/watch?v=YA1IK2HzmGw" target="_blank" rel="noopener noreferrer" aria-label="Watch the BIGBANG video on YouTube">
+          <img src="BiiiG.gif" alt="BIGBANG GIF">
+        </a>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Playing Video Games</h3>
+      <p>Playing video games is also one of my favorite things to do; sometimes they're a great way to relieve stress.</p>
+      <div class="game-gallery">
+        <a href="https://www.escapefromtarkov.com/" target="_blank" rel="noopener noreferrer" aria-label="Visit Escape from Tarkov">
+          <img src="EFT.jpg" alt="Escape from Tarkov">
+        </a>
+        <a href="https://www.counter-strike.net/cs2?l=tchinese" target="_blank" rel="noopener noreferrer" aria-label="Visit Counter-Strike 2">
+          <img src="CS2.jpg" alt="Counter-Strike 2">
+        </a>
+        <a href="https://www.ea.com/games/apex-legends/apex-legends" target="_blank" rel="noopener noreferrer" aria-label="Visit Apex Legends">
+          <img src="AL.jpg" alt="Apex Legends">
+        </a>
+        <a href="https://www.ea.com/zh-hant/games/ea-sports-fc/fc-27" target="_blank" rel="noopener noreferrer" aria-label="Visit EA Sports FC">
+          <img src="FC.png" alt="EA Sports FC">
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="watch-invite">
+    <p>It looks like you still have some things to watch.</p>
+    <a href="music.html">Click Me!</a>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="contact-me">
+      <strong>Contact me:</strong> <a href="mailto:S24xxxx@hsu.edu.hk">S24xxxx@hsu.edu.hk</a>
+    </div>
+    <p style="margin-top: 1rem;">© 2026 Lam Siu Hin · Built with vibe coding for COM1006</p>
+  </footer>
+
+  <script>
+    const mottoMessage = document.getElementById('motto-message');
+    const mottoLogos = document.querySelectorAll('.motto-header img');
+
+    const audioMap = {
+      'HSH.mp3': new Audio('HSH.mp3'),
+      'TooBad.mp3': new Audio('TooBad.mp3')
+    };
+
+    Object.values(audioMap).forEach((audio) => {
+      audio.volume = 0.18;
+    });
+
+    function setMottoMessage(text) {
+      mottoMessage.textContent = text;
+    }
+
+    function playMottoAudio(audioFile) {
+      const audio = audioMap[audioFile];
+      if (!audio) return;
+
+      if (!audio.paused) {
+        audio.pause();
+        audio.currentTime = 0;
+        return;
+      }
+
+      Object.values(audioMap).forEach((otherAudio) => {
+        if (otherAudio !== audio && !otherAudio.paused) {
+          otherAudio.pause();
+          otherAudio.currentTime = 0;
+        }
+      });
+
+      audio.currentTime = 0;
+      audio.play().catch(() => {
+        console.log('Audio playback was blocked until user interaction.');
+      });
+    }
+
+    mottoLogos.forEach((logo) => {
+      const text = logo.dataset.text;
+      const audioFile = logo.dataset.audio;
+
+      logo.addEventListener('mouseenter', () => setMottoMessage(text));
+      logo.addEventListener('focus', () => setMottoMessage(text));
+      logo.addEventListener('mouseleave', () => setMottoMessage('Hover or tap a logo'));
+      logo.addEventListener('blur', () => setMottoMessage('Hover or tap a logo'));
+      logo.addEventListener('click', () => {
+        setMottoMessage(text);
+        playMottoAudio(audioFile);
+      });
+      logo.addEventListener('touchstart', () => {
+        setMottoMessage(text);
+        playMottoAudio(audioFile);
+      }, { passive: true });
+    });
+  </script>
+
+  </div>
+
+  <script>
+    const snowLayer = document.getElementById('snow-layer');
+
+    for (let i = 0; i < 35; i++) {
+      const flake = document.createElement('span');
+
+      const left = Math.random() * 100;
+      const size = (Math.random() * 4 + 3).toFixed(2);
+      const duration = (Math.random() * 12 + 12).toFixed(2);
+      const delay = (Math.random() * 10).toFixed(2);
+      const drift = (Math.random() * 32 - 16).toFixed(2) + 'px';
+
+      flake.style.left = left + '%';
+      flake.style.width = size + 'px';
+      flake.style.height = size + 'px';
+      flake.style.animationDuration = duration + 's';
+      flake.style.animationDelay = delay + 's';
+      flake.style.setProperty('--drift', drift);
+
+      snowLayer.appendChild(flake);
+    }
+  </script>
+
+</body>
+</html>
+
